@@ -11,6 +11,7 @@ declare global {
   }
 }
 type InitialData = {
+  page: number;
   results: PokemonListItem[];
   totalPages: number;
 };

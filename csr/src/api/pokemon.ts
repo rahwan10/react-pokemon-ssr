@@ -9,6 +9,7 @@ export interface PokemonListItem {
 
 export interface PokemonListResponse {
   count: number;
+  page: number;
   results: PokemonListItem[];
   totalPages: number;
 }
@@ -50,6 +51,7 @@ export async function fetchPokemonList(
 
   return {
     count: data.count,
+    page: page,
     results,
     totalPages: Math.ceil(data.count / PAGE_SIZE),
   };

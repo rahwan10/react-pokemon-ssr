@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 
 type Props = {
   initialData?: {
+    page: number;
     results: PokemonListItem[];
     totalPages: number;
   };
@@ -16,7 +17,10 @@ const PokemonListPage = ({ initialData }: Props) => {
   const [searchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page") || "1");
 
-  const isValidInitialData = !!initialData && "results" in initialData;
+  const isValidInitialData =
+    !!initialData &&
+    "results" in initialData &&
+    initialData.page === currentPage;
 
   const [pokemons, setPokemons] = useState<PokemonListItem[]>(
     isValidInitialData ? initialData.results : [],
