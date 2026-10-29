@@ -7,14 +7,22 @@ export async function render(url: string) {
   const { pathname, searchParams } = new URL(url, "http://localhost");
 
   let initialData;
+  let status = 200;
+
+  const detailMatch = matchPath("/pokemon/:id", pathname);
 
   if (pathname === "/") {
     const page = Number(searchParams.get("page") || "1");
     initialData = await fetchPokemonList(page);
+  } else if (detailMatch) {
+    const id = Number(detailMatch.params.id);
+    initialData = await fetchPokemonDetail(id);
+  } else {
+    status = 404;
   }
 
   // "/pokemon/:id" 경로 (상세 페이지)
-  const detailMatch = matchPath("/pokemon/:id", pathname);
+  
   if (detailMatch) {
     const id = Number(detailMatch.params.id);
     initialData = await fetchPokemonDetail(id);
@@ -24,5 +32,5 @@ export async function render(url: string) {
       <App initialData={initialData} />
     </StaticRouter>,
   );
-  return { html, initialData };
+  return { html, initialData, status };
 }

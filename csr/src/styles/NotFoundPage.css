@@ -1,0 +1,22 @@
+.not-found {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.not-found-code {
+    font-size: 4rem;
+    color: #e74c3c;
+}
+
+.not-found-message {
+    margin: 12px 0 24px;
+    font-size: 1.1rem;
+    color: #999;
+}
+
+.not-found .back-link {
+    display: inline-block;
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: 600;
+}

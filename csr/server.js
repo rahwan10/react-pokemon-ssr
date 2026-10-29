@@ -26,7 +26,7 @@ async function createServer() {
 
       const { render } = await vite.ssrLoadModule("/src/entry-server.tsx");
 
-      const { html: appHtml, initialData } = await render(url);
+      const { html: appHtml, initialData, status } = await render(url);
 
       const finalHtml = template
         .replace("<!--app-html-->", () => appHtml)
@@ -36,7 +36,7 @@ async function createServer() {
             `<script>window.__INITIAL_DATA__ = ${safeSerialize(initialData)}</script>`,
         );
 
-      res.status(200).set({ "Content-Type": "text/html" }).end(finalHtml);
+      res.status(status).set({ "Content-Type": "text/html" }).end(finalHtml);
     } catch (e) {
       vite.ssrFixStacktrace(e);
       console.error(e);
@@ -60,7 +60,7 @@ async function createServer() {
 }
 
 function safeSerialize(data) {
-  return JSON.stringify(data).replace(/</g, "\\u003c");
+  return JSON.stringify(data ?? null).replace(/</g, "\\u003c");
 }
 
 createServer();
